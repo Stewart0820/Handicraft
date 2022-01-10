@@ -1,5 +1,6 @@
 package com.hand.web;
 
+import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -9,6 +10,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @Description
  */
 @SpringBootApplication
+@MapperScan("com.hand.web.dao")
 public class HandicraftApplication {
     public static void main(String[] args) {
         SpringApplication.run(HandicraftApplication.class,args);

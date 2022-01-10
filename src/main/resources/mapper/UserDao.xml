@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.web.dao.UserDao">
+
+    <resultMap type="com.hand.web.entity.User" id="UserMap">
+        <result property="userId" column="user_id" jdbcType="INTEGER"/>
+        <result property="userName" column="user_name" jdbcType="VARCHAR"/>
+        <result property="userPwd" column="user_pwd" jdbcType="VARCHAR"/>
+        <result property="userEmail" column="user_email" jdbcType="VARCHAR"/>
+        <result property="userAddr" column="user_addr" jdbcType="VARCHAR"/>
+        <result property="userPhone" column="user_phone" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="UserMap">
+        select
+          user_id, user_name, user_pwd, user_email, user_addr, user_phone
+        from team01.user
+        where user_id = #{userId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="UserMap">
+        select
+          user_id, user_name, user_pwd, user_email, user_addr, user_phone
+        from team01.user
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="UserMap">
+        select
+          user_id, user_name, user_pwd, user_email, user_addr, user_phone
+        from team01.user
+        <where>
+            <if test="userId != null">
+                and user_id = #{userId}
+            </if>
+            <if test="userName != null and userName != ''">
+                and user_name = #{userName}
+            </if>
+            <if test="userPwd != null and userPwd != ''">
+                and user_pwd = #{userPwd}
+            </if>
+            <if test="userEmail != null and userEmail != ''">
+                and user_email = #{userEmail}
+            </if>
+            <if test="userAddr != null and userAddr != ''">
+                and user_addr = #{userAddr}
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                and user_phone = #{userPhone}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="userId" useGeneratedKeys="true">
+        insert into team01.user(user_name, user_pwd, user_email, user_addr, user_phone)
+        values (#{userName}, #{userPwd}, #{userEmail}, #{userAddr}, #{userPhone})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update team01.user
+        <set>
+            <if test="userName != null and userName != ''">
+                user_name = #{userName},
+            </if>
+            <if test="userPwd != null and userPwd != ''">
+                user_pwd = #{userPwd},
+            </if>
+            <if test="userEmail != null and userEmail != ''">
+                user_email = #{userEmail},
+            </if>
+            <if test="userAddr != null and userAddr != ''">
+                user_addr = #{userAddr},
+            </if>
+            <if test="userPhone != null and userPhone != ''">
+                user_phone = #{userPhone},
+            </if>
+        </set>
+        where user_id = #{userId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from team01.user where user_id = #{userId}
+    </delete>
+
+</mapper>

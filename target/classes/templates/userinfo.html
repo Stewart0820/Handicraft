@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<table border="1">
+    <tr>
+        <td>id</td>
+        <td>姓名</td>
+        <td>邮箱</td>
+        <td>地址</td>
+        <td>电话</td>
+        <td>查询</td>
+    </tr>
+    <tr th:each="user:${userInfoList}">
+        <td th:text="${user.userId}"></td>
+        <td th:text="${user.userName}"></td>
+        <td th:text="${user.userEmail}"></td>
+        <td th:text="${user.userAddr}"></td>
+        <td th:text="${user.userPhone}"></td>
+        <td><a href="#"  th:href="@{/userOne(id=${user.userId})}" th:text="查询一条数据">XXH</a></td>
+    </tr>
+
+</table>
+</body>
+</html>
