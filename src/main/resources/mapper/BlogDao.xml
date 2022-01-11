@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.web.dao.BlogDao">
+
+    <resultMap type="com.hand.web.entity.Blog" id="BlogMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="blogName" column="blog_name" jdbcType="VARCHAR"/>
+        <result property="blogDate" column="blog_date" jdbcType="VARCHAR"/>
+        <result property="bolgPricture" column="bolg_pricture" jdbcType="VARCHAR"/>
+        <result property="blogContext" column="blog_context" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="BlogMap">
+        select
+          id, blog_name, blog_date, bolg_pricture, blog_context
+        from team01.blog
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="BlogMap">
+        select
+          id, blog_name, blog_date, bolg_pricture, blog_context
+        from team01.blog
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="BlogMap">
+        select
+          id, blog_name, blog_date, bolg_pricture, blog_context
+        from team01.blog
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="blogName != null and blogName != ''">
+                and blog_name = #{blogName}
+            </if>
+            <if test="blogDate != null and blogDate != ''">
+                and blog_date = #{blogDate}
+            </if>
+            <if test="bolgPricture != null and bolgPricture != ''">
+                and bolg_pricture = #{bolgPricture}
+            </if>
+            <if test="blogContext != null and blogContext != ''">
+                and blog_context = #{blogContext}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into team01.blog(blog_name, blog_date, bolg_pricture, blog_context)
+        values (#{blogName}, #{blogDate}, #{bolgPricture}, #{blogContext})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update team01.blog
+        <set>
+            <if test="blogName != null and blogName != ''">
+                blog_name = #{blogName},
+            </if>
+            <if test="blogDate != null and blogDate != ''">
+                blog_date = #{blogDate},
+            </if>
+            <if test="bolgPricture != null and bolgPricture != ''">
+                bolg_pricture = #{bolgPricture},
+            </if>
+            <if test="blogContext != null and blogContext != ''">
+                blog_context = #{blogContext},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from team01.blog where id = #{id}
+    </delete>
+
+</mapper>

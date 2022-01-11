@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.web.dao.ArtistsDao">
+
+    <resultMap type="com.hand.web.entity.Artists" id="ArtistsMap">
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="image" column="image" jdbcType="VARCHAR"/>
+        <result property="name" column="name" jdbcType="VARCHAR"/>
+        <result property="position" column="position" jdbcType="VARCHAR"/>
+        <result property="content" column="content" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ArtistsMap">
+        select
+          id, image, name, position, content
+        from team01.artists
+        where id = #{id}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ArtistsMap">
+        select
+          id, image, name, position, content
+        from team01.artists
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ArtistsMap">
+        select
+          id, image, name, position, content
+        from team01.artists
+        <where>
+            <if test="id != null">
+                and id = #{id}
+            </if>
+            <if test="image != null and image != ''">
+                and image = #{image}
+            </if>
+            <if test="name != null and name != ''">
+                and name = #{name}
+            </if>
+            <if test="position != null and position != ''">
+                and position = #{position}
+            </if>
+            <if test="content != null and content != ''">
+                and content = #{content}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true">
+        insert into team01.artists(image, name, position, content)
+        values (#{image}, #{name}, #{position}, #{content})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update team01.artists
+        <set>
+            <if test="image != null and image != ''">
+                image = #{image},
+            </if>
+            <if test="name != null and name != ''">
+                name = #{name},
+            </if>
+            <if test="position != null and position != ''">
+                position = #{position},
+            </if>
+            <if test="content != null and content != ''">
+                content = #{content},
+            </if>
+        </set>
+        where id = #{id}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from team01.artists where id = #{id}
+    </delete>
+
+</mapper>

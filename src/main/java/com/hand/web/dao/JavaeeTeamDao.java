@@ -1,24 +1,25 @@
 package com.hand.web.dao;
 
-import com.hand.web.entity.User;
+
+import com.hand.web.entity.JavaeeTeam;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * (User)表数据库访问层
+ * 开发团队表(JavaeeTeam)表数据库访问层
  *
  * @author Stewart
- * @since 2022-01-10 19:22:13
+ * @since 2022-01-10 19:22:10
  */
-public interface UserDao {
+public interface JavaeeTeamDao {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param userId 主键
+     * @param teamId 主键
      * @return 实例对象
      */
-    User queryById(Integer userId);
+    JavaeeTeam queryById(Long teamId);
 
     /**
      * 查询指定行数据
@@ -27,39 +28,39 @@ public interface UserDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<User> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<JavaeeTeam> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param user 实例对象
+     * @param javaeeTeam 实例对象
      * @return 对象列表
      */
-    List<User> queryAll(User user);
+    List<JavaeeTeam> queryAll(JavaeeTeam javaeeTeam);
 
     /**
      * 新增数据
      *
-     * @param user 实例对象
+     * @param javaeeTeam 实例对象
      * @return 影响行数
      */
-    int insert(User user);
+    int insert(JavaeeTeam javaeeTeam);
 
     /**
      * 修改数据
      *
-     * @param user 实例对象
+     * @param javaeeTeam 实例对象
      * @return 影响行数
      */
-    int update(User user);
+    int update(JavaeeTeam javaeeTeam);
 
     /**
      * 通过主键删除数据
      *
-     * @param userId 主键
+     * @param teamId 主键
      * @return 影响行数
      */
-    int deleteById(Integer userId);
+    int deleteById(Long teamId);
 
 }

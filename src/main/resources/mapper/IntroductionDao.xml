@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.web.dao.IntroductionDao">
+
+    <resultMap type="com.hand.web.entity.Introduction" id="IntroductionMap">
+        <result property="introId" column="intro_id" jdbcType="INTEGER"/>
+        <result property="introTitle" column="intro_title" jdbcType="VARCHAR"/>
+        <result property="introContent" column="intro_content" jdbcType="VARCHAR"/>
+        <result property="introImg" column="intro_img" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="IntroductionMap">
+        select
+          intro_id, intro_title, intro_content, intro_img
+        from team01.introduction
+        where intro_id = #{introId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="IntroductionMap">
+        select
+          intro_id, intro_title, intro_content, intro_img
+        from team01.introduction
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="IntroductionMap">
+        select
+          intro_id, intro_title, intro_content, intro_img
+        from team01.introduction
+        <where>
+            <if test="introId != null">
+                and intro_id = #{introId}
+            </if>
+            <if test="introTitle != null and introTitle != ''">
+                and intro_title = #{introTitle}
+            </if>
+            <if test="introContent != null and introContent != ''">
+                and intro_content = #{introContent}
+            </if>
+            <if test="introImg != null and introImg != ''">
+                and intro_img = #{introImg}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="introId" useGeneratedKeys="true">
+        insert into team01.introduction(intro_title, intro_content, intro_img)
+        values (#{introTitle}, #{introContent}, #{introImg})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update team01.introduction
+        <set>
+            <if test="introTitle != null and introTitle != ''">
+                intro_title = #{introTitle},
+            </if>
+            <if test="introContent != null and introContent != ''">
+                intro_content = #{introContent},
+            </if>
+            <if test="introImg != null and introImg != ''">
+                intro_img = #{introImg},
+            </if>
+        </set>
+        where intro_id = #{introId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from team01.introduction where intro_id = #{introId}
+    </delete>
+
+</mapper>

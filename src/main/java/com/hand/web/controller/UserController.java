@@ -34,6 +34,13 @@ public class UserController {
         return this.userService.queryById(id);
     }
 
+    @RequestMapping("/")
+    public ModelAndView demo() {
+        ModelAndView m = new ModelAndView();
+        m.setViewName("/index.html");
+        return m;
+    }
+
     @RequestMapping("/userSearch")
     public ModelAndView search() {
         ModelAndView m = new ModelAndView();

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.web.dao.AdDao">
+
+    <resultMap type="com.hand.web.entity.Ad" id="AdMap">
+        <result property="adId" column="ad_id" jdbcType="INTEGER"/>
+        <result property="adImg" column="ad_img" jdbcType="VARCHAR"/>
+        <result property="adTitle" column="ad_title" jdbcType="VARCHAR"/>
+        <result property="adContent" column="ad_content" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="AdMap">
+        select
+          ad_id, ad_img, ad_title, ad_content
+        from team01.ad
+        where ad_id = #{adId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="AdMap">
+        select
+          ad_id, ad_img, ad_title, ad_content
+        from team01.ad
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="AdMap">
+        select
+          ad_id, ad_img, ad_title, ad_content
+        from team01.ad
+        <where>
+            <if test="adId != null">
+                and ad_id = #{adId}
+            </if>
+            <if test="adImg != null and adImg != ''">
+                and ad_img = #{adImg}
+            </if>
+            <if test="adTitle != null and adTitle != ''">
+                and ad_title = #{adTitle}
+            </if>
+            <if test="adContent != null and adContent != ''">
+                and ad_content = #{adContent}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="adId" useGeneratedKeys="true">
+        insert into team01.ad(ad_img, ad_title, ad_content)
+        values (#{adImg}, #{adTitle}, #{adContent})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update team01.ad
+        <set>
+            <if test="adImg != null and adImg != ''">
+                ad_img = #{adImg},
+            </if>
+            <if test="adTitle != null and adTitle != ''">
+                ad_title = #{adTitle},
+            </if>
+            <if test="adContent != null and adContent != ''">
+                ad_content = #{adContent},
+            </if>
+        </set>
+        where ad_id = #{adId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from team01.ad where ad_id = #{adId}
+    </delete>
+
+</mapper>

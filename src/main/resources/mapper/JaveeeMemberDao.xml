@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.web.dao.JaveeeMemberDao">
+
+    <resultMap type="com.hand.web.entity.JaveeeMember" id="JaveeeMemberMap">
+        <result property="mId" column="m_id" jdbcType="INTEGER"/>
+        <result property="mFaceImg" column="m_face_img" jdbcType="VARCHAR"/>
+        <result property="mGrade" column="m_grade" jdbcType="VARCHAR"/>
+        <result property="mItemId" column="m_item_id" jdbcType="INTEGER"/>
+        <result property="mJob" column="m_job" jdbcType="VARCHAR"/>
+        <result property="mName" column="m_name" jdbcType="VARCHAR"/>
+        <result property="mNumber" column="m_number" jdbcType="VARCHAR"/>
+        <result property="mSkill" column="m_skill" jdbcType="VARCHAR"/>
+        <result property="mStatus" column="m_status" jdbcType="VARCHAR"/>
+        <result property="createTime" column="create_time" jdbcType="OTHER"/>
+        <result property="createUser" column="create_user" jdbcType="VARCHAR"/>
+        <result property="updateTime" column="update_time" jdbcType="OTHER"/>
+        <result property="updateUser" column="update_user" jdbcType="VARCHAR"/>
+        <result property="deleted" column="deleted" jdbcType="INTEGER"/>
+        <result property="version" column="version" jdbcType="INTEGER"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="JaveeeMemberMap">
+        select
+          m_id, m_face_img, m_grade, m_item_id, m_job, m_name, m_number, m_skill, m_status, create_time, create_user, update_time, update_user, deleted, version
+        from team01.javeee_member
+        where m_id = #{mId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="JaveeeMemberMap">
+        select
+          m_id, m_face_img, m_grade, m_item_id, m_job, m_name, m_number, m_skill, m_status, create_time, create_user, update_time, update_user, deleted, version
+        from team01.javeee_member
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="JaveeeMemberMap">
+        select
+          m_id, m_face_img, m_grade, m_item_id, m_job, m_name, m_number, m_skill, m_status, create_time, create_user, update_time, update_user, deleted, version
+        from team01.javeee_member
+        <where>
+            <if test="mId != null">
+                and m_id = #{mId}
+            </if>
+            <if test="mFaceImg != null and mFaceImg != ''">
+                and m_face_img = #{mFaceImg}
+            </if>
+            <if test="mGrade != null and mGrade != ''">
+                and m_grade = #{mGrade}
+            </if>
+            <if test="mItemId != null">
+                and m_item_id = #{mItemId}
+            </if>
+            <if test="mJob != null and mJob != ''">
+                and m_job = #{mJob}
+            </if>
+            <if test="mName != null and mName != ''">
+                and m_name = #{mName}
+            </if>
+            <if test="mNumber != null and mNumber != ''">
+                and m_number = #{mNumber}
+            </if>
+            <if test="mSkill != null and mSkill != ''">
+                and m_skill = #{mSkill}
+            </if>
+            <if test="mStatus != null and mStatus != ''">
+                and m_status = #{mStatus}
+            </if>
+            <if test="createTime != null">
+                and create_time = #{createTime}
+            </if>
+            <if test="createUser != null and createUser != ''">
+                and create_user = #{createUser}
+            </if>
+            <if test="updateTime != null">
+                and update_time = #{updateTime}
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                and update_user = #{updateUser}
+            </if>
+            <if test="deleted != null">
+                and deleted = #{deleted}
+            </if>
+            <if test="version != null">
+                and version = #{version}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="mId" useGeneratedKeys="true">
+        insert into team01.javeee_member(m_face_img, m_grade, m_item_id, m_job, m_name, m_number, m_skill, m_status, create_time, create_user, update_time, update_user, deleted, version)
+        values (#{mFaceImg}, #{mGrade}, #{mItemId}, #{mJob}, #{mName}, #{mNumber}, #{mSkill}, #{mStatus}, #{createTime}, #{createUser}, #{updateTime}, #{updateUser}, #{deleted}, #{version})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update team01.javeee_member
+        <set>
+            <if test="mFaceImg != null and mFaceImg != ''">
+                m_face_img = #{mFaceImg},
+            </if>
+            <if test="mGrade != null and mGrade != ''">
+                m_grade = #{mGrade},
+            </if>
+            <if test="mItemId != null">
+                m_item_id = #{mItemId},
+            </if>
+            <if test="mJob != null and mJob != ''">
+                m_job = #{mJob},
+            </if>
+            <if test="mName != null and mName != ''">
+                m_name = #{mName},
+            </if>
+            <if test="mNumber != null and mNumber != ''">
+                m_number = #{mNumber},
+            </if>
+            <if test="mSkill != null and mSkill != ''">
+                m_skill = #{mSkill},
+            </if>
+            <if test="mStatus != null and mStatus != ''">
+                m_status = #{mStatus},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime},
+            </if>
+            <if test="createUser != null and createUser != ''">
+                create_user = #{createUser},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime},
+            </if>
+            <if test="updateUser != null and updateUser != ''">
+                update_user = #{updateUser},
+            </if>
+            <if test="deleted != null">
+                deleted = #{deleted},
+            </if>
+            <if test="version != null">
+                version = #{version},
+            </if>
+        </set>
+        where m_id = #{mId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from team01.javeee_member where m_id = #{mId}
+    </delete>
+
+</mapper>

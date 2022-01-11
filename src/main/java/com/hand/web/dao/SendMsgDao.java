@@ -1,24 +1,25 @@
 package com.hand.web.dao;
 
-import com.hand.web.entity.User;
+
+import com.hand.web.entity.SendMsg;
 import org.apache.ibatis.annotations.Param;
 import java.util.List;
 
 /**
- * (User)表数据库访问层
+ * (SendMsg)表数据库访问层
  *
  * @author Stewart
- * @since 2022-01-10 19:22:13
+ * @since 2022-01-10 19:22:12
  */
-public interface UserDao {
+public interface SendMsgDao {
 
     /**
      * 通过ID查询单条数据
      *
-     * @param userId 主键
+     * @param cId 主键
      * @return 实例对象
      */
-    User queryById(Integer userId);
+    SendMsg queryById(Integer cId);
 
     /**
      * 查询指定行数据
@@ -27,39 +28,39 @@ public interface UserDao {
      * @param limit 查询条数
      * @return 对象列表
      */
-    List<User> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
+    List<SendMsg> queryAllByLimit(@Param("offset") int offset, @Param("limit") int limit);
 
 
     /**
      * 通过实体作为筛选条件查询
      *
-     * @param user 实例对象
+     * @param sendMsg 实例对象
      * @return 对象列表
      */
-    List<User> queryAll(User user);
+    List<SendMsg> queryAll(SendMsg sendMsg);
 
     /**
      * 新增数据
      *
-     * @param user 实例对象
+     * @param sendMsg 实例对象
      * @return 影响行数
      */
-    int insert(User user);
+    int insert(SendMsg sendMsg);
 
     /**
      * 修改数据
      *
-     * @param user 实例对象
+     * @param sendMsg 实例对象
      * @return 影响行数
      */
-    int update(User user);
+    int update(SendMsg sendMsg);
 
     /**
      * 通过主键删除数据
      *
-     * @param userId 主键
+     * @param cId 主键
      * @return 影响行数
      */
-    int deleteById(Integer userId);
+    int deleteById(Integer cId);
 
 }

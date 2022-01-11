@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hand.web.dao.ProductsDao">
+
+    <resultMap type="com.hand.web.entity.Products" id="ProductsMap">
+        <result property="newId" column="new_id" jdbcType="INTEGER"/>
+        <result property="newName" column="new_name" jdbcType="VARCHAR"/>
+        <result property="newIntro" column="new_intro" jdbcType="VARCHAR"/>
+        <result property="newImg" column="new_img" jdbcType="VARCHAR"/>
+        <result property="newPrice" column="new_price" jdbcType="NUMERIC"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="ProductsMap">
+        select
+          new_id, new_name, new_intro, new_img, new_price
+        from team01.products
+        where new_id = #{newId}
+    </select>
+
+    <!--查询指定行数据-->
+    <select id="queryAllByLimit" resultMap="ProductsMap">
+        select
+          new_id, new_name, new_intro, new_img, new_price
+        from team01.products
+        limit #{offset}, #{limit}
+    </select>
+
+    <!--通过实体作为筛选条件查询-->
+    <select id="queryAll" resultMap="ProductsMap">
+        select
+          new_id, new_name, new_intro, new_img, new_price
+        from team01.products
+        <where>
+            <if test="newId != null">
+                and new_id = #{newId}
+            </if>
+            <if test="newName != null and newName != ''">
+                and new_name = #{newName}
+            </if>
+            <if test="newIntro != null and newIntro != ''">
+                and new_intro = #{newIntro}
+            </if>
+            <if test="newImg != null and newImg != ''">
+                and new_img = #{newImg}
+            </if>
+            <if test="newPrice != null">
+                and new_price = #{newPrice}
+            </if>
+        </where>
+    </select>
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="newId" useGeneratedKeys="true">
+        insert into team01.products(new_name, new_intro, new_img, new_price)
+        values (#{newName}, #{newIntro}, #{newImg}, #{newPrice})
+    </insert>
+
+    <!--通过主键修改数据-->
+    <update id="update">
+        update team01.products
+        <set>
+            <if test="newName != null and newName != ''">
+                new_name = #{newName},
+            </if>
+            <if test="newIntro != null and newIntro != ''">
+                new_intro = #{newIntro},
+            </if>
+            <if test="newImg != null and newImg != ''">
+                new_img = #{newImg},
+            </if>
+            <if test="newPrice != null">
+                new_price = #{newPrice},
+            </if>
+        </set>
+        where new_id = #{newId}
+    </update>
+
+    <!--通过主键删除-->
+    <delete id="deleteById">
+        delete from team01.products where new_id = #{newId}
+    </delete>
+
+</mapper>
